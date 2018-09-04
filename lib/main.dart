@@ -202,7 +202,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
 
     //マイナス記号をカウントしない
     if(nums[0] == "-" ){
-      len -= len;
+      --len;
     }
 
 
@@ -227,9 +227,10 @@ class _SampleAppPageState extends State<SampleAppPage> {
     final codeController = TextEditingController();
     final anserController = TextEditingController();
     
+
     codeController.text= "ソニー";
     anserController.text= " 1";
-    
+    String returncode=codeController.text; 
     return showDialog<Null>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -259,7 +260,8 @@ class _SampleAppPageState extends State<SampleAppPage> {
           new FlatButton(
             child: new Text('Search'),
             onPressed: () {
-              anserController.text = codeserchi(codeController.text);
+              /*anserController.text =*/ codeserchi( returncode);
+              print(returncode);
               Navigator.of(context).pop();
             },
           ),
@@ -583,21 +585,21 @@ class _SampleAppPageState extends State<SampleAppPage> {
 
 
 
-  String serchiSet (String code){
-      return codeserchi(code);
-  }
+ // String serchiSet (String code){
+ //     return codeserchi(code);
+ // }
 
 
-  codeserchi(String code ) async {
+  void codeserchi(String returncode ) async {
    
-    String getCode="";
+    dynamic getCode="";
    
    
-      http.Response response = await http.get(_getCode(code)/*dataURL*/);
+      http.Response response = await http.get(_getCode(returncode)/*dataURL*/);
       final String json = response.body;
 
       //String searchWord = code; //検索する文字列symbol
-      int foundIndex = json.indexOf(code, 0);
+      int foundIndex = json.indexOf(returncode, 0);
       
       foundIndex = json.indexOf("slk:chart"+";"+"pos:1", 0);
       int i = 0;//searchWord.length; //pricedata to point
@@ -608,16 +610,19 @@ class _SampleAppPageState extends State<SampleAppPage> {
       foundIndex = json.indexOf("【",nextIndex);
       
       if (foundIndex != -1) {
-        for (i=1; json[foundIndex + i] == "】"; i++) {
+        for (i=1; json[foundIndex + i] != "】"; i++) {
           getCode += json[foundIndex + i];//getCode += json[foundIndex + i]; //current value 現在値
         }
       } else {
         print("Error");
-      }   
-     return getCode;
-    //setState(() {
-    //  print( getCode );
-    //});
+      }
+      setState(() {
+        print( getCode );
+        returncode = getCode;
+        //return code;
+      });
+      //return code;
+    
  }//load
 
  
