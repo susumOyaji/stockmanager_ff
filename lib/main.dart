@@ -47,6 +47,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
   String assetTotal;
   String assetPrice;
   String assetValue;
+  String returncode="ソニー";
   //String assetValueString;
 
 
@@ -109,6 +110,26 @@ class _SampleAppPageState extends State<SampleAppPage> {
    return getListView( );
   }
 
+  /*
+ new IconButton(
+            tooltip: 'Search',
+            icon: const Icon(Icons.search),
+            onPressed: () async {
+              final int selected = await showSearch<int>(
+                context: context,
+                delegate: _delegate,
+              );
+              if (selected != null && selected != _lastIntegerSelected) {
+                setState(() {
+                  _lastIntegerSelected = selected;
+                });
+              }
+            },
+          ),
+  */
+
+
+
 
 
 
@@ -119,11 +140,12 @@ class _SampleAppPageState extends State<SampleAppPage> {
         appBar: new AppBar(
           title: new Text("StockManager for Flutter"),
           actions: <Widget>[
-            IconButton(
+            new IconButton(
               icon: const Icon(Icons.search),
               tooltip: 'CodeNo. Search',
-              onPressed: () {
-                showSearchDialog(3);//CodeNo. Search();
+              onPressed: () async {
+              String selected = codeserchi(returncode);
+              print(selected);
               },
             ),
           ],
@@ -226,11 +248,12 @@ class _SampleAppPageState extends State<SampleAppPage> {
   showSearchDialog(int i) async {
     final codeController = TextEditingController();
     final anserController = TextEditingController();
-    
+    String returncode;
 
     codeController.text= "ソニー";
     anserController.text= " 1";
-    String returncode=codeController.text; 
+    returncode=codeController.text;
+
     return showDialog<Null>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -260,12 +283,13 @@ class _SampleAppPageState extends State<SampleAppPage> {
           new FlatButton(
             child: new Text('Search'),
             onPressed: () {
-              /*anserController.text =*/ codeserchi( returncode);
+              /*anserController.text =*/ codeserchi(returncode);
               print(returncode);
               Navigator.of(context).pop();
             },
-          ),
-          new FlatButton(
+           ),
+           new Text("$returncode"),
+            new FlatButton(
             child: new Text('Chancel'),
             onPressed: () {
               Navigator.of(context).pop();
@@ -585,14 +609,14 @@ class _SampleAppPageState extends State<SampleAppPage> {
 
 
 
- // String serchiSet (String code){
- //     return codeserchi(code);
- // }
+  String serchiSet (String code){
+      return codeserchi(code);
+  }
 
 
-  void codeserchi(String returncode ) async {
+  codeserchi(String returncode ) async {
    
-    dynamic getCode="";
+    String getCode="";
    
    
       http.Response response = await http.get(_getCode(returncode)/*dataURL*/);
@@ -617,7 +641,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
         print("Error");
       }
       setState(() {
-        print( getCode );
+        //print( getCode );
         returncode = getCode;
         //return code;
       });
