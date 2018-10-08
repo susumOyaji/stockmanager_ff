@@ -8,6 +8,7 @@ import 'MarketStandard.dart';
 import 'PortFolio.dart';
 import 'dart:io';
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 //import 'dart:convert';
 
 
@@ -40,7 +41,8 @@ class _SampleAppPageState extends State<SampleAppPage> {
   List widgets =[];// new List<Price>.filled(1, Price());
   List getwidgets = new List<Price>.filled(2,Price()); 
   StorageControl storageControl ;
- 
+  bool _isComposing = false; 
+  String  _repositories1;
    
   int i = 0;
   String responceBuff;
@@ -110,27 +112,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
    return getListView( );
   }
 
-  /*
- new IconButton(
-            tooltip: 'Search',
-            icon: const Icon(Icons.search),
-            onPressed: () async {
-              final int selected = await showSearch<int>(
-                context: context,
-                delegate: _delegate,
-              );
-              if (selected != null && selected != _lastIntegerSelected) {
-                setState(() {
-                  _lastIntegerSelected = selected;
-                });
-              }
-            },
-          ),
-  */
-
-
-
-
+ 
 
 
   @override
@@ -141,11 +123,10 @@ class _SampleAppPageState extends State<SampleAppPage> {
           title: new Text("StockManager for Flutter"),
           actions: <Widget>[
             new IconButton(
-              icon: const Icon(Icons.search),
+              icon: const Icon(Icons.add_box),
               tooltip: 'CodeNo. Search',
-              onPressed: () async {
-              String selected = codeserchi(returncode);
-              print(selected);
+              onPressed: () {
+                _methodsInput(context);//_buildInput();
               },
             ),
           ],
@@ -176,13 +157,190 @@ class _SampleAppPageState extends State<SampleAppPage> {
             mini: true,
             tooltip: 'Refresh', // used by assistive technologies
             child: Icon(Icons.update),
-            onPressed:reload,
+            onPressed: reload,
            
           ),
     
     );
 
   }
+
+  Widget _buildInput() {
+  return Container(
+    margin: EdgeInsets.all(16.0),
+    child: TextField(
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.search),
+        hintText: 'Please enter a search repository name.',
+        labelText: "search"
+      ),
+      onChanged: (inputString) {
+        if (inputString.length >= 4) {
+           _isComposing = true;  
+          _searchRepositories1(inputString).then((repositories) {
+            setState(() {
+              _repositories1 = repositories;
+              showBasicDialog(context);
+            });
+          });
+        }
+      },
+    )
+  );
+}
+
+ void _methodsInput(BuildContext context) async{
+    final codeController = TextEditingController();
+    final stockController = TextEditingController();
+    final itempriceController = TextEditingController();
+    //codeController.text=widgets[i].code;
+    stockController.text=widgets[i].stocks;
+    itempriceController.text=widgets[i].itemprice;
+
+
+    return showDialog<Null>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return new CupertinoAlertDialog(
+        title: new Text('登録'),
+        content: new SingleChildScrollView(
+        padding: EdgeInsets.all(0.0),
+        child: new ListBody(
+            children: <Widget>[
+              new TextField(
+                decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                hintText: 'Please enter a search repository name.',
+                labelText: "search"
+                ),
+                onChanged: (inputString) {
+                if (inputString.length >= 4) {
+                  _isComposing = true;  
+                  _searchRepositories1(inputString).then((repositories) {
+                  setState(() {
+                    _repositories1 = repositories;
+                    showBasicDialog(context);
+                  });
+              });
+        }
+      },
+    )
+              /*
+              new TextField(
+                  decoration: new InputDecoration(labelText: "Enter New Stock"),
+                  keyboardType: TextInputType.number,
+                  controller:stockController,
+              ),
+               new TextField(
+                  decoration: new InputDecoration(labelText: "Enter New Itemprice"),
+                  keyboardType: TextInputType.number,
+                  controller:itempriceController,
+              ),
+              */
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          CupertinoAlertDialog(
+            child: new Text('OK'),
+             isDefaultAction: true,
+            onPressed: () {
+             print(codeController.text+stockController.text+itempriceController.text);
+              Navigator.of(context).pop();
+            },
+          ),
+          new FlatButton(
+            child: new Text('Chancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+
+
+void showBasicDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) =>
+    new CupertinoAlertDialog(
+    title: Text("Result"),
+    content:  _isComposing ? Text("${_repositories1}"):Text("non"),
+    actions: <Widget>[
+    CupertinoDialogAction(
+        child: const Text("Register"),
+        isDefaultAction: true,
+        onPressed: () {
+         Navigator.pop(context);
+        },
+      ),
+      CupertinoDialogAction(
+        child: const Text("Cansel"),
+        isDestructiveAction: true,
+        onPressed: () { 
+          Navigator.pop(context);
+         },
+      ),
+    ],
+  ),
+  
+  );
+  
+}
+
+
+
+//ソニー
+Future<String> _searchRepositories1(String searchWord ) async {
+   
+    String getCode="";
+    String list;
+   
+      http.Response response = await http.get("https://info.finance.yahoo.co.jp/search/?query=" + searchWord);
+      http.Response response1 = await http.get("https://info.finance.yahoo.co.jp/search/?query=ソニー");
+      final String json = response1.body;
+
+      String searchKeyWord = "slk:chart;pos:1"; //検索する文字列symbol
+      //int foundIndex = json.indexOf(returncode, 0);
+      
+      int foundIndex = json.indexOf(searchKeyWord, 0);
+      if (foundIndex == -1){
+        return list ="Not Faund";
+      }
+
+
+
+      int i = 0;//searchWord.length; //pricedata to point
+      //始めの位置を探す
+      int nextIndex = foundIndex + i;
+      
+
+      foundIndex = json.indexOf("【",nextIndex);
+      
+      if (foundIndex != -1) {
+        for (i=1; json[foundIndex + i] != "】"; i++) {
+          getCode += json[foundIndex + i];//getCode += json[foundIndex + i]; //current value 現在値
+        }
+      } else {
+        print("Error");
+        return list ="Error";
+      }
+      //setState(() {
+        //print( getCode );
+        //list = getCode;
+        //return code;
+      //});
+      return list= getCode;
+    
+ }//load
+
+
+
 
 
 
