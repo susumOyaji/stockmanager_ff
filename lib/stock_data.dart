@@ -75,19 +75,17 @@ class StockData extends ChangeNotifier {
     //return 'https://yahoo.co.jp';
   }
 
-  http.Client _httpClient;
+  http.Client  _httpClient;
 
   static bool actuallyFetchData = true;
 
-  String _fetchNextChunk() {
+  String _fetchNextChunk()  {
     String companyName = "";
     String realValue = "";
     String realChange = "";
     String percent = "";
 
-    _httpClient
-        .get(_urlToFetch(_nextChunk++))
-        .then<Null>((http.Response response) {
+      _httpClient.get(_urlToFetch(_nextChunk++)).then<Null>((http.Response response) {
       final String json = response.body;
 
       String searchWord = "symbol"; //検索する文字列symbol

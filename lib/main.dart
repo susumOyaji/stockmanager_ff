@@ -139,12 +139,12 @@ class _SampleAppPageState extends State<SampleAppPage> {
                   MaketStandard(
                     stdwidgets : getwidgets,
                   ),
-                PortFolio(
-                  portassetPrice : separate(assetPrice),
-                  portassetTotal : separate(assetTotal),
-                  portassetvalue:  separate(assetValue),
-                ),
-                new Expanded(
+                  PortFolio(
+                    portassetPrice : separate(assetPrice),
+                    portassetTotal : separate(assetTotal),
+                    portassetvalue:  separate(assetValue),
+                  ),
+                  new Expanded(
                   child:
                     getBody(),
                 ),
@@ -189,7 +189,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
   );
 }
 
- void _methodsInput(BuildContext context) async{
+Future _methodsInput(BuildContext context) async{
     final codeController = TextEditingController();
     final stockController = TextEditingController();
     final itempriceController = TextEditingController();
@@ -202,7 +202,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
     context: context,
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
-      return new CupertinoAlertDialog(
+      return new AlertDialog(
         title: new Text('登録'),
         content: new SingleChildScrollView(
         padding: EdgeInsets.all(0.0),
@@ -215,39 +215,27 @@ class _SampleAppPageState extends State<SampleAppPage> {
                 labelText: "search"
                 ),
                 onChanged: (inputString) {
-                if (inputString.length >= 4) {
-                  _isComposing = true;  
-                  _searchRepositories1(inputString).then((repositories) {
-                  setState(() {
-                    _repositories1 = repositories;
-                    showBasicDialog(context);
-                  });
-              });
-        }
-      },
-    )
-              /*
-              new TextField(
-                  decoration: new InputDecoration(labelText: "Enter New Stock"),
-                  keyboardType: TextInputType.number,
-                  controller:stockController,
+                  if (inputString.length >= 4) {
+                    _isComposing = true;  
+                    _searchRepositories1(inputString).then((repositories) {
+                      setState(() {
+                        _repositories1 = repositories;
+                      showBasicDialog(context);
+                      });
+                    });
+                  }
+                },
               ),
-               new TextField(
-                  decoration: new InputDecoration(labelText: "Enter New Itemprice"),
-                  keyboardType: TextInputType.number,
-                  controller:itempriceController,
-              ),
-              */
+   
+       
             ],
           ),
         ),
         actions: <Widget>[
-          CupertinoAlertDialog(
+          new FlatButton(
             child: new Text('OK'),
-             isDefaultAction: true,
             onPressed: () {
-             print(codeController.text+stockController.text+itempriceController.text);
-              Navigator.of(context).pop();
+            Navigator.of(context).pop();
             },
           ),
           new FlatButton(
@@ -809,8 +797,7 @@ Future<String> _searchRepositories1(String searchWord ) async {
 
  
 
-  void getserchi( ) async
-  {
+  Future getserchi( ) async {
     // http.Client _httpClient;
   // _httpClient = new http.Client();
 
@@ -935,7 +922,7 @@ Future<String> _searchRepositories1(String searchWord ) async {
 
 
 
-  void loadData() async {
+  Future loadData() async {
 
   // http.Client _httpClient;
   // _httpClient = new http.Client();
