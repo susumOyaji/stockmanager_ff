@@ -9,7 +9,7 @@ import 'package:stockmanager_ff/expense.dart';
 import 'package:stockmanager_ff/database_helper.dart';
 
 class StorageService {
-  static const String _databaseName = "super_simple_budget1.db";
+  static const String _databaseName = "stockmanager_ff.db";
   static const String _keyCurrency = "currency";
   static const String _keyBudget = "budget";
   DatabaseHelper dbHelper = new DatabaseHelper();

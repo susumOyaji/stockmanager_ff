@@ -53,7 +53,7 @@ import 'package:flutter/material.dart';
                           width: 5.0,
                         ),
                       ),
-                      labelStyle: TextStyle(fontSize: 15.0,color: Colors.orange),
+                      labelStyle: TextStyle(fontSize: 12.0,color: Colors.orange),
                       hintText: 'Code to search.',
                       labelText: 'search.',
                     ),
