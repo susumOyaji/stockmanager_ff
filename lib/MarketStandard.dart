@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'main.dart';
+//import 'dart:async';
+//import 'main.dart';
 import 'ViewModel/Finance.dart';
  
 /*
@@ -70,12 +70,32 @@ class MaketStandard extends StatelessWidget{
                  SizedBox(
                    height: 70.0,
                     child: Card(
-                      
                       color: stdwidgets[0].polar ? Colors.grey[400] : Colors.grey[700],
                       //elevation: 10.0,
                       margin: EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
                       child: Column(
-                        //mainAxisSize: MainAxisSize.min,
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                         children: <Widget>[
+                             new Padding(
+                              padding: new EdgeInsets.only(left: 40.0),//EdgeInsets.all(5.0),
+                               child: new Text('日経平均株価',style: new TextStyle(fontSize: 12.0, color: Colors.blueGrey),),
+                             ), 
+                             new Padding(
+                               padding: new EdgeInsets.only(left:10.0),
+                               child: new Text('株価     :${stdwidgets[0].getrealValue}',style: new TextStyle(fontSize: 10.0),),
+                             ),
+                             new Padding(
+                               padding: new EdgeInsets.only(left:10.0),
+                               child: new Text('前日比 :${stdwidgets[0].prevday}',style: new TextStyle(fontSize: 10.0),),
+                             ),
+                             new Padding(
+                               padding: new EdgeInsets.only(left:10.0),
+                               child: new Text('変動率 :${stdwidgets[0].percent}',style: new TextStyle(fontSize: 10.0),),
+                             ),
+                              /*
                         children: [               
                           ListTile(
                             contentPadding: EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 0.0),    
@@ -83,8 +103,8 @@ class MaketStandard extends StatelessWidget{
                             title: const Text('  日経平均株価',style: TextStyle(fontSize: 12.0, color: Colors.blueGrey),),
                             subtitle: Text('Value:  ${stdwidgets[0].getrealValue}\nChang: ${stdwidgets[0].prevday}\nRatio:   ${stdwidgets[0].percent}',
                                 style: TextStyle(fontSize: 10.0, color: stdwidgets[0].polar ? Colors.red : Colors.black,),),
-                          ),
-                          ],
+                          ),*/
+                        ],
                       ), 
                     ),
                   ),

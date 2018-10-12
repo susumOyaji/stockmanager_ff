@@ -589,7 +589,7 @@ Future<String> _searchRepositories1(String searchWord ) async {
           borderRadius:
             const BorderRadius.all(const Radius.circular(2.0)),
         ),
-
+        
         child: Column(
         children: [
          Row( //1桁目
