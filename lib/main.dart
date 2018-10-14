@@ -594,10 +594,33 @@ Future<String> _searchRepositories1(String searchWord ) async {
         children: [
           Row( //1桁目
             children: [
-
-
               new Card(
-                child: new Text("data"),
+                margin: EdgeInsets.all(0.0),
+                color:Colors.black,
+                child: Column(
+                  children: <Widget>[
+                    new Text("${widgets[i].code}",style: TextStyle(fontSize: 10.0, color: Colors.white),),
+                    new Text("${widgets[i].name}",style: TextStyle(fontSize: 10.0, color: Colors.white),),
+                    new Text("${separate(widgets[i].realValue.toString())}",style: TextStyle(fontSize: 10.0, color: Colors.white),),
+                     SizedBox(
+                      height: 20.0,
+                      width: 50.0,  
+                      child:RaisedButton(
+                      padding: EdgeInsets.all(0.0),
+                      disabledColor: Colors.orange,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                      ),
+                      color: widgets[i].polar ? Colors.red : Colors.blue,
+                      child: new Text( widgets[i].percentcheng ? '${widgets[i].prevday}' : '${widgets[i].percent}',
+                                      style: TextStyle(fontSize: 12.0, color: Colors.black),),
+                      onPressed: () => setState((){
+                        widgets[i].percentcheng = !widgets[i].percentcheng;
+                      }),
+                    ),
+                    ),
+                  ], 
+                 ) 
               ),
 
 
@@ -763,8 +786,42 @@ Future<String> _searchRepositories1(String searchWord ) async {
      );
   }
 
-
-
+/*
+GridView.count(
+  primary: false,
+  padding: const EdgeInsets.all(20.0),
+  crossAxisSpacing: 10.0,
+  crossAxisCount: 2,
+  children: <Widget>[
+    const Text('He\'d have you all unravel at the'),
+    const Text('Heed not the rabble'),
+    const Text('Sound of screams but the'),
+    const Text('Who scream'),
+    const Text('Revolution is coming...'),
+    const Text('Revolution, they...'),
+  ],
+)
+CustomScrollView(
+  primary: false,
+  slivers: <Widget>[
+    SliverPadding(
+      padding: const EdgeInsets.all(20.0),
+      sliver: SliverGrid.count(
+        crossAxisSpacing: 10.0,
+        crossAxisCount: 2,
+        children: <Widget>[
+          const Text('He\'d have you all unravel at the'),
+          const Text('Heed not the rabble'),
+          const Text('Sound of screams but the'),
+          const Text('Who scream'),
+          const Text('Revolution is coming...'),
+          const Text('Revolution, they...'),
+        ],
+      ),
+    ),
+  ],
+)
+*/
   String serchiSet (String code){
       return codeserchi(code);
   }
