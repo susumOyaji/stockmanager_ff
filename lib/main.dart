@@ -592,11 +592,21 @@ Future<String> _searchRepositories1(String searchWord ) async {
         
         child: Column(
         children: [
-         Row( //1桁目
+          Row( //1桁目
             children: [
+
+
+              new Card(
+                child: new Text("data"),
+              ),
+
+
+
+              
+
             //Expanded(
                 /*child:*/ Container(
-
+               
                  // width: 70.0,
                  // decoration: BoxDecoration(
                  //   color: Color.fromARGB(0xFF, 0x12, 0x44, 0x5D),

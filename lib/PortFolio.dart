@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
         decoration: BoxDecoration(
         color: Color.fromARGB(0xFF, 0x0B, 0x39, 0x50),
         borderRadius: const BorderRadius.all(const Radius.circular(3.0)),
+        
       ),
       child: Column(
         children: [
@@ -103,136 +104,106 @@ import 'package:flutter/material.dart';
                      // }
                     //},*/
                        ),
-                      //       ),
-                          
-                            
-                            
-                        
-                       // )
                       ],
                     ),
                   ),
                   ),
-                SizedBox(//--------------------------------------------------------
-                  height: 65.0,
-                  width: 100.0,
-                  child: new Card(
-                  margin: new EdgeInsets.all(0.0),
-                  child: new Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                       new Padding(
-                              padding: new EdgeInsets.only(left: 40.0),//EdgeInsets.all(5.0),
-                               child: new Text('日経平均株価',style: new TextStyle(fontSize: 10.0, color: Colors.blueGrey),),
-                             ), 
-                      
-                     
-                          
-                            
-                            
-                        
-                       // )
-                      ],
-                    ),
-                  ),
-                  ),
-
-
              
-             
-               
-                
-                  
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    //color: Colors.yellow,
-                    //border: Border.all(width: 2.0, color: Colors.black38), //枠線
-                    //borderRadius:const BorderRadius.all(const Radius.circular(2.0)),
-                  ),
-                    margin: const EdgeInsets.fromLTRB(4.0, 5.0, 0.0, 0.0), //.all(4.0),
-                    padding: new EdgeInsets.all(0.0),
-                      child: Column(
-                        children: [
-                          Text(
-                            "投資状況",
-                            style: TextStyle(fontSize: 12.0, color: Colors.orange),
-                          ),
-                        ],
-                      ), 
-                  ),
-                ),
-              
-              Expanded(
-                //1行2桁目
-                child: Container(
-                  //decoration: BoxDecoration(
-                   //color: Colors.orangeAccent,
-                    //border: Border.all(width: 2.0, color: Colors.black38),
-                   // borderRadius:
-                   //     const BorderRadius.all(const Radius.circular(2.0)),
-                 // ),
-                  margin:
-                      const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0), //all(4.0),
-                  padding: new EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Text("投資総額", style: TextStyle(fontSize: 9.0, color: Colors.white)),
-                      Text("${portassetPrice.toString()}", style: TextStyle(fontSize: 12.0, color: Colors.white)),
-                    ],
-                  ), // Text("1行2桁目"), //Image.asset('images/pic2.jpg'),
-                ),
-              ),
-
-              Expanded(
-                child: Container(
-                 // decoration: BoxDecoration(
-                    //color: Colors.yellow,
-                    //border: Border.all(width: 2.0, color: Colors.black38), //枠線
-                  //  borderRadius:
-                  //      const BorderRadius.all(const Radius.circular(2.0)),
-                 // ),
-                      margin: const EdgeInsets.fromLTRB(
-                      0.0, 5.0, 0.0, 0.0), //.all(4.0),
-                  padding: new EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Text("時価総額",style: TextStyle(fontSize: 9.0, color: Colors.white)),
-                      Text(
-                        "${portassetTotal.toString()}",
-                        style: TextStyle(fontSize: 12.0, color: Colors.red),
+                Expanded(
+                  flex: 2,
+                  child:new Card(
+                    color: Colors.black,
+                    child:
+                    //margin: new EdgeInsets.all(0.0),
+                    new Container(
+                      decoration: BoxDecoration(
+                      color: Colors.black,
+                      border: Border.all(width: 1.0, color: const Color(0xFFFFFFFF)),
+                      borderRadius:
+                        const BorderRadius.all(const Radius.circular(10.0)),
                       ),
-                    ],
-                  ), // Image.asset('images/pic1.jpg'),
+                      child:
+                        new Row(
+                          children: <Widget>[
+                            Expanded(child:
+                            new Column(
+                              children: <Widget>[                  
+                                new Padding(
+                                  padding: new EdgeInsets.only(top: 5.0, right: 0.0, bottom: 0.0, left: 0.0),//EdgeInsets.all(5.0),
+                                  child:new Text('投資状況',style: new TextStyle(fontSize: 10.0, color: Colors.white),),
+                                ), 
+                                new Padding(
+                                  padding: new EdgeInsets.only(top: 5.0, right: 0.0, bottom: 0.0, left: 0.0),
+                                  child:new Text('投資総額',style: new TextStyle(fontSize: 10.0, color: Colors.white),),
+                                ), 
+                                new Padding(
+                                  padding: new EdgeInsets.only(top: 5.0, right: 0.0, bottom: 0.0, left: 0.0),
+                                  child: new Text("${portassetPrice.toString()}", style: TextStyle(fontSize: 12.0, color: Colors.white)),
+                                ), 
+                              ],
+                            ),
+                            ),
+                            Expanded(child:
+                            new Column(
+                              children: <Widget>[                  
+                                new Padding(
+                                  padding: new EdgeInsets.only(top: 5.0, right: 0.0, bottom: 0.0, left: 0.0),
+                                  child: new Text('',style: new TextStyle(fontSize: 10.0, color: Colors.white),),
+                                ), 
+                                new Padding(
+                                  padding: new EdgeInsets.only(top: 5.0, right: 0.0, bottom: 0.0, left: 0.0),
+                                  child: new Text('評価総額',style: new TextStyle(fontSize: 10.0, color: Colors.white),),
+                                ), 
+                                new Padding(
+                                  padding: new EdgeInsets.only(top: 5.0, right: 0.0, bottom: 0.0, left: 0.0),
+                                  child: new Text("${portassetTotal.toString()}", style: TextStyle(fontSize: 12.0, color: Colors.white)),
+                                ), 
+                              ],
+                            ),
+                            ),
+                          ],
+                        ), 
+                      ),
+                  ),
                 ),
-              ),
+                //),
 
+               
               Expanded(
-                //1行2桁目
-                flex: 1,
                 child: Container(
-                 decoration: BoxDecoration(
-                 color: Colors.purple,
-                 //border: Border.all(width: 1.0, color: Colors.black),
-                 borderRadius:
-                      const BorderRadius.all(const Radius.circular(2.0)),
-                  ),
-                 // margin:const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0), //all(4.0),
-                  padding: new EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      Text("損益", style: TextStyle(fontSize: 10.0, color: Colors.white)),
-                      Text("${portassetvalue.toString()}", style: TextStyle(fontSize: 12.0, color: Colors.black)),
-                    ],
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    color: Colors.purple,
+                    border: Border.all(width: 1.0, color: Colors.white),
+                  borderRadius:const BorderRadius.all(const Radius.circular(10.0)),
+                ),
+                margin:const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0), //all(4.0),
+                padding: new EdgeInsets.all(0.0),
+                child: Card(
+                  color: Colors.purple,
+                  child:Container(
+                    child:Column(
+                      children: <Widget>[
+                        new Padding(
+                          padding: new EdgeInsets.only(top: 5.0, right: 0.0, bottom: 0.0, left: 0.0),
+                          child:new Text("損益", style: TextStyle(fontSize: 10.0, color: Colors.black)),
+                            //Text("${portassetvalue.toString()}", style: TextStyle(fontSize: 12.0, color: Colors.black)),
+                        ),
+                        new Padding(
+                          padding: new EdgeInsets.only(top: 5.0, right: 0.0, bottom: 0.0, left: 0.0),
+                          child:new Text("${portassetvalue.toString()}", style: TextStyle(fontSize: 12.0, color: Colors.black)),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-              
-            ],),
-         
+              ),
+                  
+            ],
+          ),
        ), 
-           //),
+                  //),
             //getListView(),
          
             /*
