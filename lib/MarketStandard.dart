@@ -66,16 +66,13 @@ class MaketStandard extends StatelessWidget{
         Row(//1行目
             children: [
             Expanded(
-               child: 
-                 SizedBox(
-                   height: 70.0,
-                    child: Card(
+               child: new Card(
                       color: stdwidgets[0].polar ? Colors.grey[400] : Colors.grey[700],
                       //elevation: 10.0,
-                      margin: EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                      margin: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
                       child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        //mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.start,
                         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                          children: <Widget>[
@@ -107,34 +104,70 @@ class MaketStandard extends StatelessWidget{
                         ],
                       ), 
                     ),
-                  ),
-              ),
+                  //),
+            ),
               Expanded(//1行2桁目
-                child: 
-                SizedBox(
-                  height: 70.0,
-                  child: Card(
+               child: Card(
                   color: stdwidgets[1].polar ? Colors.grey[400] :Colors.grey[700],
-                  margin:const EdgeInsets.fromLTRB(4.0, 0.0, 0.0, 0.0), //all(4.0),
+                  margin:const EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0), //all(4.0),
                   // padding: new EdgeInsets.all(8.0),
                   child: Column(
+                     crossAxisAlignment: CrossAxisAlignment.stretch,
+                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ListTile(
-                      contentPadding: EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 0.0),    
-                      leading: Image.asset('images/usa3.png', height: 30.0,fit: BoxFit.cover,),
-                      title: const Text('NYダウ',style: TextStyle(fontSize: 12.0, color: Colors.blueGrey),),
-                      subtitle: Text('Value:  ${stdwidgets[1].getrealValue}\nChang: ${stdwidgets[1].prevday}\nRatio:   ${stdwidgets[1].percent}',
-                          style: TextStyle(fontSize: 10.0, color: stdwidgets[0].polar ? Colors.red : Colors.black,),),
-                    ),
+                      new Padding(
+                              padding: new EdgeInsets.only(left: 40.0),//EdgeInsets.all(5.0),
+                               child: new Text('ＮＹダウ',style: new TextStyle(fontSize: 12.0, color: Colors.blueGrey),),
+                             ), 
+                             new Padding(
+                               padding: new EdgeInsets.only(left:10.0),
+                               child: new Text('株価     :${stdwidgets[1].getrealValue}',style: new TextStyle(fontSize: 10.0),),
+                             ),
+                             new Padding(
+                               padding: new EdgeInsets.only(left:10.0),
+                               child: new Text('前日比 :${stdwidgets[1].prevday}',style: new TextStyle(fontSize: 10.0),),
+                             ),
+                             new Padding(
+                               padding: new EdgeInsets.only(left:10.0),
+                               child: new Text('変動率 :${stdwidgets[1].percent}',style: new TextStyle(fontSize: 10.0),),
+                             ),
                   ],
                   ), 
                  ),
-                ),
+               // ),
               ),
+              
             ],
           ),
-     
-         
+       
+        
+        /*
+        import 'package:flutter/material.dart';
+        import 'package:super_simple_budget/generated/i18n.dart';
+
+        class Divider extends StatelessWidget {
+        @override
+        Widget build(BuildContext context) {
+        return new Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+          new Expanded(
+            child: new Divider(
+          color: Colors.white,
+        )),
+        new Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: new Text("S.of(context).history"),
+        ),
+        new Expanded(
+            child: new Divider(
+          color: Colors.white,
+        )),
+      ],
+    );
+  }
+}
+*/
           //new Expanded(
             //child: new Container(
               //decoration: BoxDecoration(

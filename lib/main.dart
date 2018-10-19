@@ -6,7 +6,7 @@ import 'package:stockmanager_ff/View/StorageControl.dart';
 import 'ViewModel/Finance.dart';
 import 'MarketStandard.dart';
 import 'PortFolio.dart';
-import 'dart:io';
+//import 'dart:io';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 //import 'dart:convert';
@@ -109,10 +109,41 @@ class _SampleAppPageState extends State<SampleAppPage> {
  
 
   setupDisp() {
-   return getListView( );
+   //historyDivider();
+   return gridView( );
   }
 
  
+
+
+
+  historyDivider() {
+ // @override
+  //Widget build(BuildContext context) {
+    return new Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        new Expanded(
+            child: new Divider(
+          color: Colors.white,
+        )),
+        new Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: new Text("Profit and loss of each",style: new TextStyle(fontSize: 10.0, color: Colors.yellow),),
+        ),
+        new Expanded(
+            child: new Divider(
+          color: Colors.white,
+        )),
+      ],
+    );
+  }
+
+ 
+
+
+
+
 
 
   @override
@@ -144,10 +175,14 @@ class _SampleAppPageState extends State<SampleAppPage> {
                     portassetTotal : separate(assetTotal),
                     portassetvalue:  separate(assetValue),
                   ),
+                  historyDivider(),
+                  //new Padding(
+                    //padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                   // addSearch(),
+                  //),
                   new Expanded(
-                  child:
-                    getBody(),
-                ),
+                    child:getBody(),
+                  ),
                 ],
               ),
           
@@ -451,37 +486,6 @@ Future<String> _searchRepositories1(String searchWord ) async {
 
 
 
- showAlertDialog(int i) async {
-    return showDialog<Null>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return new AlertDialog(
-        title: new Text('投資状況'),
-        content: new SingleChildScrollView(
-          padding: EdgeInsets.all(0.0),
-          child: new ListBody(
-            children: <Widget>[
-              new Text('コード ${widgets[i].code}'),
-              new Text('企業名 ${widgets[i].name}'),
-              new Text('取得数 ${widgets[i].stocks}数'),
-              new Text('買値 ${widgets[i].itemprice}円'),
-              new Text("投資額${separate((int.parse( widgets[i].stocks)*int.parse(widgets[i].itemprice)).toString())}円"),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text('Return'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-  }
 
 
 
@@ -548,280 +552,225 @@ Future<String> _searchRepositories1(String searchWord ) async {
   );
   }
 
-
-
-
-
-
-
-
-
-
-  ListView getListView() => new ListView.builder(
-      itemCount: widgets.length,//<-- setState()
-      itemBuilder: (BuildContext context, int position) {
-        return getRow(position);
-      }
-  );
-
-  Widget getRow(int i) {
-    //return new Padding(padding: new EdgeInsets.all(10.0), child: new Text("Row ${widgets[i]["title"]}"));
-
-      return new Padding(padding: new EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 0.0),
-      child:  new GestureDetector(//------------>
-          onTap: (){//投資状況
-            print("Container clicked ${widgets[i].name}");
-            showAlertDialog(i);
-            return;
-          },
-          onDoubleTap: (){//エントリー修正
-            print("Container Doubleclicked");
-            return showEntryDialog(i);
-          },
-          onLongPress: (){//
-            print("Container onLongPress");
-          }
-          ,
-      child: Container(
-          decoration: BoxDecoration(
-          color: Color.fromARGB(0xFF, 0x32, 0x54, 0x6D),
-            //border: Border.all(width: 2.0, color: Colors.black38), //枠線
-          borderRadius:
-            const BorderRadius.all(const Radius.circular(2.0)),
+   Widget _buildTextComposer() {
+    return new IconTheme(
+      data: new IconThemeData(color: Theme.of(context).accentColor),
+      child: new Container(
+       // height: 10.0,
+       // padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+       // margin: const EdgeInsets.symmetric(vertical: 0.0),
+        child: new Row(
+          //mainAxisSize: MainAxisSize.min,
+          //mainAxisAlignment: MainAxisAlignment.center,
+          //crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            //new Flexible(
+              /*child:*/ new TextField(
+                //controller: _textController,
+                onChanged: (String text) {
+                  setState(() {
+                    _isComposing = text.length > 0;
+                  });
+                },
+                //onSubmitted: _handleSubmitted,
+                decoration:
+                    new InputDecoration.collapsed(hintText: "Input a Name"),
+              ),
+            //),
+            new Container(
+              margin: new EdgeInsets.symmetric(horizontal: 4.0),
+              child: new IconButton(
+                icon: new Icon(Icons.send),
+                //onPressed: _isComposing ? () => _handleSubmitted(_textController.text) : null,                                           //modified
+              ),
+            ),
+          ],
         ),
-        
-        child: Column(
-        children: [
-          Row( //1桁目
-            children: [
-              new Card(
-                margin: EdgeInsets.all(0.0),
-                color:Colors.black,
-                child: Column(
-                  children: <Widget>[
-                    new Text("${widgets[i].code}",style: TextStyle(fontSize: 10.0, color: Colors.white),),
-                    new Text("${widgets[i].name}",style: TextStyle(fontSize: 10.0, color: Colors.white),),
-                    new Text("${separate(widgets[i].realValue.toString())}",style: TextStyle(fontSize: 10.0, color: Colors.white),),
-                     SizedBox(
-                      height: 20.0,
-                      width: 50.0,  
-                      child:RaisedButton(
-                      padding: EdgeInsets.all(0.0),
-                      disabledColor: Colors.orange,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(2.0)),
-                      ),
-                      color: widgets[i].polar ? Colors.red : Colors.blue,
-                      child: new Text( widgets[i].percentcheng ? '${widgets[i].prevday}' : '${widgets[i].percent}',
-                                      style: TextStyle(fontSize: 12.0, color: Colors.black),),
-                      onPressed: () => setState((){
-                        widgets[i].percentcheng = !widgets[i].percentcheng;
-                      }),
-                    ),
-                    ),
-                  ], 
-                 ) 
-              ),
-
-
-
-              
-
-            //Expanded(
-                /*child:*/ Container(
-               
-                 // width: 70.0,
-                 // decoration: BoxDecoration(
-                 //   color: Color.fromARGB(0xFF, 0x12, 0x44, 0x5D),
-                    //border: Border.all(width: 2.0, color: Colors.black38), //枠線
-                 //   borderRadius:
-                    //    const BorderRadius.all(const Radius.circular(12.0)),
-                  //),
-
-                  margin: const EdgeInsets.fromLTRB(4.0, 0.0, 0.0, 0.0), //.all(4.0),
-                 // padding: new EdgeInsets.all(9.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        "${widgets[i].code}",style: TextStyle(fontSize: 10.0, color: Colors.blue),
-                      ),
-                      Text(
-                        "${widgets[i].name}",style: TextStyle(fontSize: 10.0, color: Colors.green),
-                      ),
-                    ],
-                  ),
-                ),
-              //),
-              //Expanded(
-                /*child:*/ Container(
-                  width: 50.0,
-                  //margin: 10.0,
-                 // decoration: BoxDecoration(
-                   // color: Color.fromARGB(0xFF, 0x12, 0x44, 0x5D),
-                    //border: Border.all(width: 2.0, color: Colors.black38), //枠線
-                    //borderRadius:
-                    //    const BorderRadius.all(const Radius.circular(2.0)),
-                  //),
-
-                  //margin: const EdgeInsets.fromLTRB(
-                  //    0.0, 0.0, 0.0, 0.0), //.all(4.0),
-                 // padding: new EdgeInsets.all(10.0),
-                child: Column(
-                    children: [
-                      Text(
-                        "買値",
-                        style: TextStyle(fontSize: 10.0, color: Colors.white),
-                      ),
-                      Text(
-                        "${separate(widgets[i].itemprice.toString())}",
-                        style: TextStyle(fontSize: 10.0, color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-              //),
-
-              Expanded(
-                 child: Container(
-                  //decoration: BoxDecoration(
-                  //  color: Color.fromARGB(0xFF, 0x12, 0x44, 0x5D),
-                    //border: Border.all(width: 2.0, color: Colors.black38), //枠線
-                    //borderRadius:
-                    //    const BorderRadius.all(const Radius.circular(2.0)),
-                  //),
-
-                  //margin: const EdgeInsets.fromLTRB(
-                  //    0.0, 0.0, 0.0, 0.0), //.all(4.0),
-                 // padding: new EdgeInsets.all(8.0),
-                child: Column(
-                    children: [
-                      Text(
-                        "現在値",
-                        style: TextStyle(fontSize: 10.0, color: Colors.white),
-                      ),
-                      Text(
-                        "${separate(widgets[i].realValue.toString())}",
-                        style: TextStyle(fontSize: 10.0, color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-               Expanded(
-                 child: Container(
-                   // decoration: BoxDecoration(
-                   // color: Color.fromARGB(0xFF, 0x12, 0x44, 0x5D),
-                    //border: Border.all(width: 2.0, color: Colors.black38), //枠線
-                    //borderRadius:
-                    //    const BorderRadius.all(const Radius.circular(2.0)),
-                  //),
-
-                  //margin: const EdgeInsets.fromLTRB(
-                  //    0.0, 0.0, 0.0, 0.0), //.all(4.0),
-                 // padding: new EdgeInsets.all(10.0),
-                child: Column(
-                    children: [
-                      Text(
-                        "利益",
-                        style: TextStyle(fontSize: 10.0, color: Colors.red),
-                      ),
-                      Text(
-                        "${separate(widgets[i].gain.toString())}",
-                        style: TextStyle(fontSize: 10.0, fontFamily: 'Roboto',color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-               ),
-                Expanded(
-                   child: Container(
-                 // decoration: BoxDecoration(
-                 //   color: Color.fromARGB(0xFF, 0x12, 0x44, 0x5D),
-                    //border: Border.all(width: 2.0, color: Colors.black38), //枠線
-                    //borderRadius:
-                    //    const BorderRadius.all(const Radius.circular(2.0)),
-                 // ),
-
-                  //margin: const EdgeInsets.fromLTRB(
-                  //    0.0, 0.0, 0.0, 0.0), //.all(4.0),
-                 // padding: new EdgeInsets.all(10.0),
-                child: Column(
-                    children: [
-                      Text(
-                        "時価",
-                        style: TextStyle(fontSize: 10.0, color: Colors.white),
-                      ),
-                      Text(
-                        "${separate(widgets[i].totalAsset.toString())}",
-                        style: TextStyle(fontSize: 10.0, fontFamily: 'Roboto', color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-                ),
-                //Expanded(
-                Container(
-                  width: 60.0,
-                  padding: EdgeInsets.all(0.0),
-                  margin: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
-                  child:
-                    RaisedButton(
-                      padding: EdgeInsets.all(0.0),
-                      disabledColor: Colors.orange,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(2.0)),
-                      ),
-                      color: widgets[i].polar ? Colors.red : Colors.blue,
-                      child: new Text( widgets[i].percentcheng ? '${widgets[i].prevday}' : '${widgets[i].percent}',
-                                      style: TextStyle(fontSize: 12.0, color: Colors.black),),
-                      onPressed: () => setState((){
-                        widgets[i].percentcheng = !widgets[i].percentcheng;
-                      }),
-                    ),
-                ),
-            ]),
-        ],),
       ),
-      ),
-     );
+    );
   }
 
-/*
-GridView.count(
-  primary: false,
-  padding: const EdgeInsets.all(20.0),
-  crossAxisSpacing: 10.0,
-  crossAxisCount: 2,
-  children: <Widget>[
-    const Text('He\'d have you all unravel at the'),
-    const Text('Heed not the rabble'),
-    const Text('Sound of screams but the'),
-    const Text('Who scream'),
-    const Text('Revolution is coming...'),
-    const Text('Revolution, they...'),
-  ],
-)
-CustomScrollView(
-  primary: false,
-  slivers: <Widget>[
-    SliverPadding(
-      padding: const EdgeInsets.all(20.0),
-      sliver: SliverGrid.count(
-        crossAxisSpacing: 10.0,
-        crossAxisCount: 2,
+
+  Widget addSearch(){
+    return new Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+      child: 
+    Container(
+      //height: 60.0,
+
+      color: Colors.white,
+      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+      child:Row(
         children: <Widget>[
-          const Text('He\'d have you all unravel at the'),
-          const Text('Heed not the rabble'),
-          const Text('Sound of screams but the'),
-          const Text('Who scream'),
-          const Text('Revolution is coming...'),
-          const Text('Revolution, they...'),
-        ],
+           SizedBox(
+                  height: 60.0,
+                  width: 50.0,
+                child:
+               
+                new TextField(
+                          //controller: _textController,
+                          //textAlign: TextAlign.justify,
+                          
+                          style: TextStyle(fontSize: 9.0,color:Colors.red),
+                          onChanged: (String text) {
+                          //setState(() {
+                          //_isComposing = text.length > 0;
+                          //});
+                          },
+                          //onSubmitted: _handleSubmitted,
+                          decoration:new InputDecoration(
+                            labelText: 'search.',
+                            hintText: "Name",
+                            border:new OutlineInputBorder(
+                              borderRadius: const BorderRadius.all(
+                              const Radius.circular(2.0),
+                            ),
+                            borderSide: new BorderSide(
+                              color: Colors.red,
+                              width: 350.0,
+                            ),
+                          ),
+                        ),
+                        
+                            /*           
+                       TextField(
+                          style: TextStyle(fontSize: 9.0,color:Colors.black),
+                          autofocus: false,
+                          
+                          decoration: InputDecoration(
+                      
+                   
+                            border:new OutlineInputBorder(
+                              borderRadius: const BorderRadius.all(
+                              const Radius.circular(8.0),
+                            ),
+                            borderSide: new BorderSide(
+                              color: Colors.black,
+                              width: 5.0,
+                            ),
+                          ),
+                          labelStyle: TextStyle(fontSize: 1.0,color: Colors.black),
+                          hintText: 'Code to search.',
+                          labelText: 'search.',
+                          ),*/
+                      //onChanged: (inputString) {
+                      //if (inputString.length >= 4) {
+                    //_isComposing = true;  
+                    //_searchRepositories1(inputString).then((repositories) {
+                    //setState(() {
+                    // _repositories1 = repositories;
+                    // showBasicDialog(context);
+                    //});
+                  //});
+                     // }
+                    //},*/
+                       ),
+                ),
+              
+               
+        ]
       ),
-    ),
-  ],
-)
-*/
+              
+    ),    
+      );
+    
+  }
+
+
+
+
+
+
+  GridView gridView() => new GridView.builder(
+        itemCount: widgets.length,//<-- setState()
+        //itemCount: 2,
+        gridDelegate:new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),//横方向の表示数
+        itemBuilder: (BuildContext context, int index) {
+          return new GestureDetector(
+          
+            child: new Card(
+              elevation: 2.0,
+              child: Container(
+                color: Colors.black,
+                padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                alignment: Alignment.center,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                   mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new Text("(${widgets[index].code}) "+"${widgets[index].name}",style: TextStyle(fontSize: 9.0, color: Colors.white),),//new Text('Item $index'),
+                    new Text("現在値 ${separate(widgets[index].realValue.toString())}",style: TextStyle(fontSize: 10.0, color: Colors.white),),
+                    new Text("利益　${separate(widgets[index].gain.toString())}",style: TextStyle(fontSize: 10.0, fontFamily: 'Roboto',color: Colors.yellow),),
+                    new Padding(
+                      padding: new EdgeInsets.only(top: 5.0, right: 0.0, bottom: 0.0, left: 0.0),
+                      child:SizedBox(
+                      height: 15.0,
+                      width: 60.0,  
+                      child:RaisedButton(
+                        padding: EdgeInsets.all(0.0),
+                        disabledColor: Colors.orange,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                        ),
+                        color: widgets[index].polar ? Colors.red : Colors.blue,
+                        child: new Text( widgets[index].percentcheng ? '${widgets[index].prevday}' : '${widgets[index].percent}',
+                                      style: TextStyle(fontSize: 12.0, color: Colors.black),),
+                        onPressed: () => setState((){
+                          widgets[index].percentcheng = !widgets[index].percentcheng;
+                        }),
+                      ),
+                    ),
+                   ),
+                ],
+              
+              ),
+                //alignment: Alignment.center,
+                //child: new Text("${widgets[index].code}",style: TextStyle(fontSize: 10.0, color: Colors.white),),//new Text('Item $index'),
+              ),
+            ),
+          
+            onTap: () {
+               showDialog(
+                barrierDismissible: false,
+                context: context,
+                child: new CupertinoAlertDialog(
+                  title: new Column(
+                    children: <Widget>[
+                      new Text("GridView"),
+                      new Icon(
+                        Icons.favorite,
+                        color: Colors.green,
+                      ),
+                      new Text("買値 : ${separate(widgets[index].itemprice.toString())}",style: TextStyle(fontSize: 10.0, color: Colors.black),),
+                      new Text("取得株数 : ${separate(widgets[index].stocks.toString())}",style: TextStyle(fontSize: 10.0, color: Colors.red),),
+                    ],
+                  ),
+                  content: new Text("Selected Item $index"),
+                  actions: <Widget>[
+                    new FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: new Text("OK"))
+                  ],
+                ),
+              );
+            },
+            onDoubleTap: (){//エントリー修正
+            print("Container Doubleclicked");
+            return showEntryDialog(i);
+            },
+            onLongPress: (){//
+              print("Container onLongPress");
+            },
+
+          );
+        });
+
+
+
+
+
   String serchiSet (String code){
       return codeserchi(code);
   }
